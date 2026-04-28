@@ -41,12 +41,14 @@ img { max-width: 100%; }
 /* ============================================================
    CRT OVERLAY
    ============================================================ */
+/* ============================================================
+   FLICKER（CRTスキャンラインは要素単位で適用）
+   ============================================================ */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
+  background: rgba(0,0,0,0);
   pointer-events: none;
   z-index: 9998;
   animation: flicker 8s infinite;
@@ -413,6 +415,225 @@ section { padding: 72px 20px; position: relative; }
 }
 
 /* ============================================================
+   BRAND（あなたのお店の名前が、ゲームになる）
+   ============================================================ */
+#brand {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(191,0,255,0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 80%, rgba(255,45,120,0.18) 0%, transparent 60%),
+    var(--bg);
+  padding: 80px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-tag {
+  display: inline-block;
+  font-family: var(--fh);
+  font-size: 9px;
+  color: var(--go);
+  text-shadow: 0 0 10px var(--go), 0 0 20px var(--go);
+  letter-spacing: 0.2em;
+  padding: 6px 14px;
+  border: 2px solid var(--go);
+  border-radius: 4px;
+  margin-bottom: 26px;
+  animation: brTagBlink 1.6s steps(1) infinite;
+  box-shadow: 0 0 14px rgba(255,230,0,0.5);
+}
+@keyframes brTagBlink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.45; }
+}
+
+.brand-headline {
+  font-family: var(--fh);
+  font-size: clamp(14px, 3.5vw, 22px);
+  line-height: 2;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+}
+.brand-headline .br-l1 { color: var(--cy); text-shadow: 0 0 12px var(--cy), 0 0 26px var(--cy); display: inline-block; }
+.brand-headline .br-l2 { color: var(--mg); text-shadow: 0 0 12px var(--mg), 0 0 26px var(--mg); display: inline-block; }
+.brand-headline .br-em {
+  font-size: clamp(20px, 5vw, 32px);
+  color: var(--go);
+  text-shadow:
+    0 0 14px var(--go),
+    0 0 28px var(--go),
+    0 0 50px rgba(255,230,0,0.6);
+  letter-spacing: 0.1em;
+  display: inline-block;
+  animation: brEmPulse 2.4s ease-in-out infinite;
+  margin: 0 6px;
+}
+@keyframes brEmPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 14px var(--go),
+      0 0 28px var(--go),
+      0 0 50px rgba(255,230,0,0.6);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow:
+      0 0 22px var(--go),
+      0 0 44px var(--go),
+      0 0 80px rgba(255,230,0,0.9),
+      0 0 120px rgba(255,230,0,0.4);
+    transform: scale(1.04);
+  }
+}
+
+.brand-sub {
+  font-family: var(--fb);
+  font-size: 16px;
+  color: #ddd;
+  line-height: 2;
+  margin-bottom: 40px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ───── ゲーム筐体プレビュー（架空サンプル3つ） ───── */
+.brand-mockups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 44px;
+}
+@media (max-width: 540px) {
+  .brand-mockups { grid-template-columns: 1fr; gap: 16px; max-width: 320px; margin-left: auto; margin-right: auto; }
+}
+
+.mockup {
+  background: linear-gradient(180deg, #1a0a2e 0%, #0d0420 100%);
+  border: 3px solid;
+  border-radius: 10px 10px 6px 6px;
+  padding: 4px;
+  position: relative;
+  box-shadow: 0 0 14px rgba(0,0,0,.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.mockup:nth-child(1) { border-color: var(--mg); box-shadow: 0 0 18px rgba(255,45,120,0.5); }
+.mockup:nth-child(2) { border-color: var(--cy); box-shadow: 0 0 18px rgba(0,245,255,0.5); }
+.mockup:nth-child(3) { border-color: var(--gr); box-shadow: 0 0 18px rgba(57,255,20,0.5); }
+.mockup:hover { transform: translateY(-4px); }
+
+.mockup-screen {
+  background: #02010c;
+  border-radius: 6px;
+  padding: 16px 10px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mockup-screen::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.025) 2px, rgba(255,255,255,0.025) 4px);
+  pointer-events: none;
+}
+.mockup-icon { font-size: 26px; margin-bottom: 6px; display: block; }
+.mockup-title {
+  font-family: var(--fh);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+.mockup:nth-child(1) .mockup-title { color: var(--mg); text-shadow: 0 0 8px var(--mg); }
+.mockup:nth-child(2) .mockup-title { color: var(--cy); text-shadow: 0 0 8px var(--cy); }
+.mockup:nth-child(3) .mockup-title { color: var(--gr); text-shadow: 0 0 8px var(--gr); }
+.mockup-shop {
+  font-family: var(--fb);
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 4px;
+}
+.mockup-tag {
+  position: absolute;
+  top: 4px; right: 4px;
+  font-family: var(--fh);
+  font-size: 6px;
+  background: var(--go);
+  color: #000;
+  padding: 2px 4px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  z-index: 2;
+}
+
+/* ───── ベネフィット3点（看板的） ───── */
+.brand-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+@media (max-width: 540px) {
+  .brand-benefits { grid-template-columns: 1fr; }
+}
+.bb-item {
+  background: rgba(255,255,255,0.04);
+  border: 2px solid;
+  padding: 18px 14px;
+  text-align: center;
+  border-radius: 8px;
+}
+.bb-item:nth-child(1) { border-color: var(--cy); box-shadow: 0 0 10px rgba(0,245,255,0.3); }
+.bb-item:nth-child(2) { border-color: var(--mg); box-shadow: 0 0 10px rgba(255,45,120,0.3); }
+.bb-item:nth-child(3) { border-color: var(--gr); box-shadow: 0 0 10px rgba(57,255,20,0.3); }
+
+.bb-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+.bb-title {
+  font-family: var(--fh);
+  font-size: 9px;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.bb-item:nth-child(1) .bb-title { color: var(--cy); text-shadow: 0 0 6px var(--cy); }
+.bb-item:nth-child(2) .bb-title { color: var(--mg); text-shadow: 0 0 6px var(--mg); }
+.bb-item:nth-child(3) .bb-title { color: var(--gr); text-shadow: 0 0 6px var(--gr); }
+.bb-desc {
+  font-family: var(--fb);
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* ───── 引用 ───── */
+.brand-quote {
+  font-family: var(--fb);
+  font-size: 17px;
+  color: #fff;
+  line-height: 2;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px rgba(0,245,255,0.3);
+}
+.brand-quote strong {
+  color: var(--go);
+  text-shadow: 0 0 10px var(--go), 0 0 20px var(--go);
+  font-weight: bold;
+  font-size: 19px;
+}
+
+/* ============================================================
    PAIN
    ============================================================ */
 #pain { background: var(--bg2); }
@@ -582,6 +803,173 @@ section { padding: 72px 20px; position: relative; }
 }
 .genre-card:hover .gc-tap { color: var(--go); }
 .genre-card.open .gc-tap { color: var(--go); }
+/* ━━━ "業種以外もOK" バナー（爽やか目立ちver） ━━━ */
+.gc-more-banner {
+  position: relative;
+  margin: 40px 4px 8px;
+  padding: 30px 24px 32px;
+  background:
+    linear-gradient(135deg,
+      rgba(0,245,255,.18) 0%,
+      rgba(57,255,20,.14) 50%,
+      rgba(0,245,255,.18) 100%),
+    rgba(8, 28, 30, .55);
+  border: 3px solid var(--cy);
+  border-radius: 24px;
+  text-align: center;
+  overflow: hidden;
+  box-shadow:
+    0 0 24px rgba(0,245,255,.55),
+    0 0 50px rgba(57,255,20,.25),
+    inset 0 0 40px rgba(0,245,255,.08);
+  animation: gcBreathe 2.8s ease-in-out infinite;
+}
+@keyframes gcBreathe {
+  0%, 100% {
+    box-shadow:
+      0 0 24px rgba(0,245,255,.55),
+      0 0 50px rgba(57,255,20,.25),
+      inset 0 0 40px rgba(0,245,255,.08);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 36px rgba(0,245,255,.85),
+      0 0 80px rgba(57,255,20,.45),
+      0 0 120px rgba(0,245,255,.2),
+      inset 0 0 40px rgba(0,245,255,.12);
+    transform: scale(1.012);
+  }
+}
+
+/* キラキラ装飾（背景に散らす） */
+.gc-more-banner::before {
+  content: '✦  ✦  ✦  ✦  ✦';
+  position: absolute;
+  top: 8px;
+  left: 0; right: 0;
+  font-size: 10px;
+  color: rgba(0,245,255,.4);
+  letter-spacing: 1.5em;
+  text-align: center;
+  pointer-events: none;
+  animation: gcSparkle 2s ease-in-out infinite;
+}
+@keyframes gcSparkle {
+  0%, 100% { opacity: .4; }
+  50% { opacity: 1; text-shadow: 0 0 8px var(--cy); }
+}
+
+/* 流れる光 */
+.gc-more-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 70%; height: 100%;
+  background: linear-gradient(90deg,
+    transparent, rgba(255,255,255,.2), transparent);
+  animation: gcShine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gcShine {
+  0% { left: -120%; }
+  60%, 100% { left: 200%; }
+}
+
+.gc-more-banner > * { position: relative; z-index: 1; }
+
+.gcm-icon {
+  font-size: 44px;
+  display: inline-block;
+  margin-bottom: 14px;
+  animation: gcFloat 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(57,255,20,.6));
+}
+@keyframes gcFloat {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+.gcm-headline {
+  font-family: var(--fh);
+  font-size: 13px;
+  line-height: 2;
+  margin-bottom: 16px;
+  color: #fff;
+  text-shadow: 0 0 12px var(--cy), 0 0 24px var(--cy);
+  letter-spacing: 0.05em;
+}
+.gcm-headline .gcm-yellow {
+  font-size: 11px;
+  color: var(--gr);
+  text-shadow: 0 0 10px var(--gr), 0 0 20px var(--gr);
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.gcm-headline .gcm-big {
+  font-size: 18px;
+  color: var(--cy);
+  text-shadow:
+    0 0 12px var(--cy),
+    0 0 24px var(--cy),
+    0 0 40px rgba(0,245,255,.6);
+  letter-spacing: 0.08em;
+  display: inline-block;
+  margin-top: 4px;
+  animation: gcBigPulse 2.2s ease-in-out infinite;
+}
+@keyframes gcBigPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 12px var(--cy),
+      0 0 24px var(--cy),
+      0 0 40px rgba(0,245,255,.6);
+  }
+  50% {
+    text-shadow:
+      0 0 18px var(--cy),
+      0 0 36px var(--cy),
+      0 0 60px rgba(0,245,255,.85),
+      0 0 90px rgba(57,255,20,.4);
+  }
+}
+
+.gcm-sub {
+  font-family: var(--fb);
+  font-size: 15px;
+  color: #f0ffff;
+  line-height: 1.9;
+  margin-bottom: 18px;
+}
+.gcm-sub strong {
+  color: var(--gr);
+  text-shadow: 0 0 10px var(--gr);
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.gcm-tags {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.gcm-tag {
+  font-family: var(--fh);
+  font-size: 8px;
+  padding: 6px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  border: 2px solid;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+}
+.gcm-tag.gt1 { color: var(--cy); border-color: var(--cy); text-shadow: 0 0 6px var(--cy); box-shadow: 0 0 8px rgba(0,245,255,.3); }
+.gcm-tag.gt2 { color: var(--gr); border-color: var(--gr); text-shadow: 0 0 6px var(--gr); box-shadow: 0 0 8px rgba(57,255,20,.3); }
+.gcm-tag.gt3 { color: var(--go); border-color: var(--go); text-shadow: 0 0 6px var(--go); box-shadow: 0 0 8px rgba(255,230,0,.3); }
+.gcm-tag.gt4 { color: var(--mg); border-color: var(--mg); text-shadow: 0 0 6px var(--mg); box-shadow: 0 0 8px rgba(255,45,120,.3); }
+
+/* 旧クラスは残しておく（互換性） */
 .gc-more-note {
   text-align: center;
   margin-top: 32px;
@@ -1230,7 +1618,7 @@ footer {
           <span class="n-go">お店に、</span><br>
           <span class="n-mg">ゲームを。</span>
         </div>
-        <div class="screen-sub">あなたのお店だけの本気ゲーム、作ります。</div>
+        <div class="screen-sub">あなたのお店だけの<br>本気ゲーム、作ります。</div>
         <div class="screen-insert">▶ TAP TO START ◀</div>
       </div>
       <div class="cabinet-panel">
@@ -1272,6 +1660,93 @@ footer {
 <div class="pix-div"></div>
 
 <!-- ============================
+  BRAND（お店の名前を冠したオリジナルゲーム）
+============================= -->
+<section id="brand">
+  <div class="brand-inner">
+    <div class="brand-tag fade-up">★ ONLY FOR YOU ★</div>
+
+    <h2 class="brand-headline fade-up">
+      <span class="br-l1">あなたの</span><span class="br-em">お店の名前</span><span class="br-l2">が、</span><br>
+      <span class="br-l1">そのまま</span><span class="br-em">ゲーム</span><span class="br-l2">になる。</span>
+    </h2>
+
+    <p class="brand-sub fade-up">
+      汎用テンプレじゃない、<br>
+      "あなたのお店だけ"の<br>
+      オリジナルゲーム。<br>
+      <br>
+      お店のキャラ、<br>
+      メニュー、<br>
+      世界観を全部詰め込んで、<br>
+      <br>
+      二度とない体験を<br>
+      お客さんに届けます。
+    </p>
+
+    <!-- ゲーム筐体プレビュー -->
+    <div class="brand-mockups fade-up">
+      <div class="mockup">
+        <div class="mockup-tag">EXAMPLE</div>
+        <div class="mockup-screen">
+          <span class="mockup-icon">🎮</span>
+          <div class="mockup-title">UWASA<br>BROTHERS</div>
+          <div class="mockup-shop">@ 噂のシーシャBar</div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-tag">EXAMPLE</div>
+        <div class="mockup-screen">
+          <span class="mockup-icon">☕</span>
+          <div class="mockup-title">CAFE TARO<br>BARISTA</div>
+          <div class="mockup-shop">@ あなたのカフェ</div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-tag">EXAMPLE</div>
+        <div class="mockup-screen">
+          <span class="mockup-icon">💇</span>
+          <div class="mockup-title">SALON<br>RUN</div>
+          <div class="mockup-shop">@ あなたの美容室</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ベネフィット3つ -->
+    <div class="brand-benefits fade-up">
+      <div class="bb-item">
+        <span class="bb-icon">🏷</span>
+        <div class="bb-title">店名が<br>そのままタイトル</div>
+        <div class="bb-desc">「○○ブラザーズ」のように、<br>お店の名前がゲーム名になる。<br>覚えてもらえる。</div>
+      </div>
+      <div class="bb-item">
+        <span class="bb-icon">🎨</span>
+        <div class="bb-title">お店オリジナル<br>キャラ登場</div>
+        <div class="bb-desc">店主・スタッフ・看板メニューを<br>ドット絵で再現。<br>世界観に没入できる。</div>
+      </div>
+      <div class="bb-item">
+        <span class="bb-icon">📣</span>
+        <div class="bb-title">他では遊べない<br>独占コンテンツ</div>
+        <div class="bb-desc">「あの店でしか遊べない」<br>希少性が、<br>来店動機を直接的に作る。</div>
+      </div>
+    </div>
+
+    <p class="brand-quote fade-up">
+      「ランキングがあるから来た」<br>
+      「キャラに会いたくて来た」<br>
+      <strong>"ゲームのために来店する"</strong>を、<br>
+      作っちゃいましょう。
+    </p>
+
+    <div class="cta-row fade-up">
+      <a href="https://lin.ee/nEAEVJ8" target="_blank" rel="noopener" class="btn btn-line"><i class="fab fa-line"></i>うちでも作りたい</a>
+    </div>
+  </div>
+</section>
+
+<div class="pix-div"></div>
+
+<!-- ============================
   PAIN
 ============================= -->
 <section id="pain">
@@ -1288,7 +1763,7 @@ footer {
       <div class="pain-card fade-up" data-num="01">
         <span class="pain-icon">😔</span>
         <h3>リピーターが<br>なかなか増えない</h3>
-        <p>一度来てくれたお客さんが、次に来てくれるかわからない。常連をつくる仕掛けがない。</p>
+        <p>一度来てくれたお客さんが、<br>次に来てくれるかわからない。<br>常連をつくる仕掛けがない。</p>
       </div>
       <div class="pain-card fade-up" data-num="02">
         <span class="pain-icon">📱</span>
@@ -1303,7 +1778,7 @@ footer {
       <div class="pain-card fade-up" data-num="04">
         <span class="pain-icon">⏰</span>
         <h3>待ち時間・滞在時間が<br>退屈になりがち</h3>
-        <p>順番待ちや料理が出るまでの時間、お客さんが手持ち無沙汰で困っている。</p>
+        <p>順番待ちや料理が出るまでの時間、<br>お客さんが手持ち無沙汰で困っている。</p>
       </div>
     </div>
   </div>
@@ -1334,10 +1809,10 @@ footer {
       </div>
       <div class="ba-col">
         <div class="ba-label after">AFTER ゲームあり！</div>
-        <div class="ba-item after fade-up"><span class="ba-dot"></span>「ランキング上げたい！」で週3来店</div>
+        <div class="ba-item after fade-up"><span class="ba-dot"></span>「ランキング上げたい！」でお店を認知！</div>
         <div class="ba-item after fade-up"><span class="ba-dot"></span>お客さんが自発的にSNS投稿</div>
         <div class="ba-item after fade-up"><span class="ba-dot"></span>「あの店のゲームが面白い」で話題に</div>
-        <div class="ba-item after fade-up"><span class="ba-dot"></span>待ち時間が「早く順番来ないかな」に</div>
+        <div class="ba-item after fade-up"><span class="ba-dot"></span>待ち時間が「ゲームの話題」に</div>
         <div class="ba-item after fade-up"><span class="ba-dot"></span>1位に特典→来店頻度が爆上がり</div>
       </div>
     </div>
@@ -1367,8 +1842,11 @@ footer {
         </div>
         <div class="gc-teaser">お酒とゲームの最強タッグ</div>
         <div class="gc-detail">
-          🍻 お酒コンボチャレンジ<br>
-          🏆 週間飲み比べランキング<br>
+          🏆 「ランキング上げたい！」<br>
+          　でお店を認知！<br>
+          ⏰ 待ち時間が「ゲームの話題」に<br>
+          🍻 お酒飲みゲーム<br>
+          🏆 ランキングでお店の来店導線に<br>
           🎯 ダーツ連動スコアゲーム<br>
           → リピーター急増の実績あり
         </div>
@@ -1382,9 +1860,9 @@ footer {
         </div>
         <div class="gc-teaser">おしゃれ×ゲームで差別化</div>
         <div class="gc-detail">
-          ⏱ コーヒー焙煎タイミング当て<br>
-          🍰 スイーツデコ対戦ゲーム<br>
-          📸 インスタ映え採点ゲーム<br>
+          ☕️ カフェゲームなどももちろん制作可能<br>
+          🍰 新作スイーツアンケートなど<br>
+          📸 インスタ映え採点ランキングゲーム<br>
           → SNS投稿数が激増します
         </div>
         <div class="gc-tap">TAP FOR DETAIL ▼</div>
@@ -1397,7 +1875,7 @@ footer {
         </div>
         <div class="gc-teaser">待ち時間がワクワクに変わる</div>
         <div class="gc-detail">
-          💈 髪型シミュレーターゲーム<br>
+          💈 顔の形にあったオススメの髪型診断<br>
           ⭐ スタイリスト指名ランキング<br>
           🎁 来店ポイントRPG<br>
           → 指名率アップに直結します
@@ -1412,7 +1890,7 @@ footer {
         </div>
         <div class="gc-teaser">食事前後に遊べる仕掛けを</div>
         <div class="gc-detail">
-          🎮 寿司ネタ記憶ゲーム<br>
+          🎮 ガチャガチャクーポン<br>
           📅 来店スタンプRPG<br>
           🏅 メニュー制覇バッジシステム<br>
           → 「全メニュー制覇したい！」が口癖に
@@ -1442,10 +1920,10 @@ footer {
         </div>
         <div class="gc-teaser">試着が楽しいイベントになる</div>
         <div class="gc-detail">
-          👗 コーデ診断ゲーム<br>
-          📸 試着チャレンジ採点<br>
+          👗 オススメコーデ占い<br>
+          📸 アパレル人気ランキングアイテム<br>
           🎰 スクラッチ感覚の福袋ゲーム<br>
-          → 来店滞在時間が2倍に
+          → 来店頻度が2倍に
         </div>
         <div class="gc-tap">TAP FOR DETAIL ▼</div>
       </div>
@@ -1458,32 +1936,33 @@ footer {
         <div class="gc-teaser">滞在そのものをコンテンツに</div>
         <div class="gc-detail">
           🗺 館内宝探しゲーム<br>
-          🌙 連泊ポイントRPG<br>
+          🌙 来館ポイントRPG<br>
           📸 チェックインスタンプラリー<br>
           → 口コミ・リピート率が跳ね上がる
         </div>
         <div class="gc-tap">TAP FOR DETAIL ▼</div>
       </div>
 
-      <div class="genre-card fade-up" onclick="toggleGenre(this)">
-        <div class="gc-top">
-          <span class="gc-icon">🎮</span>
-          <div class="gc-name">あなたのお店</div>
-        </div>
-        <div class="gc-teaser">業種関係なく作れます！</div>
-        <div class="gc-detail">
-          💡 どんな業種でも相談OK<br>
-          🎯 「こんなゲームあったら...」<br>　という妄想からでも大丈夫<br>
-          🚀 まず話してみてください！
-        </div>
-        <div class="gc-tap">TAP FOR DETAIL ▼</div>
-      </div>
-
     </div>
-    <p class="gc-more-note fade-up">
-      ↑ これ以外の業種もOK！<br>
-      「うちの業種で作れる？」という相談、大歓迎です。
-    </p>
+
+    <!-- ━━━ "業種以外もOK" 爽やかバナー ━━━ -->
+    <div class="gc-more-banner fade-up">
+      <span class="gcm-icon">✨</span>
+      <div class="gcm-headline">
+        <span class="gcm-yellow">↑ これ以外の業種もぜんぶOK！</span><br>
+        <span class="gcm-big">どんなお店でも作れます</span>
+      </div>
+      <p class="gcm-sub">
+        「うちの業種で作れる？」<br>
+        そんな相談、<strong>大歓迎です。</strong>
+      </p>
+      <div class="gcm-tags">
+        <span class="gcm-tag gt1">業種問わず</span>
+        <span class="gcm-tag gt2">妄想OK</span>
+        <span class="gcm-tag gt3">初回相談無料</span>
+        <span class="gcm-tag gt4">気軽にどうぞ</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1729,7 +2208,8 @@ footer {
 
     <p class="sim-note">
       投資回収目安：制作費10万円ベースなら<strong style="color:var(--gr);">1〜2ヶ月で回収完了</strong>のラインが現実的。<br>
-      ゲームは"作って終わり"ではなく、お店の資産として長く使える集客装置です。
+      ゲームは"作って終わり"ではなく、<br>
+      お店の資産として長く使える集客装置です。
     </p>
 
     <div class="cta-row fade-up" style="margin-top:40px;">
@@ -1924,18 +2404,18 @@ footer {
   FOOTER
 ============================= -->
 <footer>
-  <div class="footer-logo">U.wasano GAME FACTORY</div>
-  <p class="footer-sub">powered by U.wasano Shisha Bar</p>
+  <div class="footer-logo">噂のゲーム制作部</div>
+  <p class="footer-sub">U.wasano GAME FACTORY</p>
   <div class="footer-info">
-    <strong style="color:#ccc;">U.wasano Shisha Bar</strong><br>
-    📍 石川県金沢市片町1丁目（詳細は公式サイトへ）<br>
-    🕐 営業時間・定休日は公式サイト・SNSをご確認ください<br>
-    🌐 <a href="https://uwasa-shisha.com/" target="_blank">https://uwasa-shisha.com/</a>
+    <strong style="color:var(--cy);">🎮 ゲーム制作のご依頼・ご相談</strong><br>
+    LINE・SNS にて随時受付中<br>
+    初回相談は完全無料（24時間以内に返信）<br>
+    業種問わず・全国どこでも対応可能
   </div>
   <div class="footer-sns">
     <a href="https://lin.ee/nEAEVJ8" target="_blank" rel="noopener" class="sns-icon"><i class="fab fa-line"></i></a>
   </div>
-  <p class="footer-copy">© 2025 U.WASANO SHISHA BAR ALL RIGHTS RESERVED</p>
+  <p class="footer-copy">© 2025 噂のゲーム制作部 ALL RIGHTS RESERVED</p>
 </footer>
 
 <!-- ============================
