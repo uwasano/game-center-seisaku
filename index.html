@@ -58,6 +58,379 @@ body::after {
   99%{opacity:0.92}
 }
 
+/* ════════════════════════════════════════════════════════════
+   ████████████████████████████████████████████████████████
+   ██                                                    ██
+   ██   ✨ ENHANCED VISUAL EFFECTS PACK v2.0 ✨        ██
+   ██   噂のゲーム制作部 - U.wasano GAME FACTORY      ██
+   ██   ハイクオリティ仕様書: 完全アーケード再現      ██
+   ██                                                    ██
+   ████████████████████████████████████████████████████████
+   ════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────
+   グローバル装飾アニメーション
+
+/* ■ ピクセルパーティクル（飛び散る星） */
+@keyframes pixelFloat {
+  0%   { transform: translate(0, 0) rotate(0deg);   opacity: 0.4; }
+  25%  { transform: translate(8px, -10px) rotate(90deg); opacity: 0.9; }
+  50%  { transform: translate(0, -20px) rotate(180deg); opacity: 1;   }
+  75%  { transform: translate(-8px, -10px) rotate(270deg); opacity: 0.9; }
+  100% { transform: translate(0, 0) rotate(360deg); opacity: 0.4; }
+}
+
+/* ■ ネオンの呼吸 */
+@keyframes neonBreath {
+  0%, 100% { filter: brightness(1)     drop-shadow(0 0 8px currentColor); }
+  50%      { filter: brightness(1.18)  drop-shadow(0 0 18px currentColor); }
+}
+
+/* ■ ゴールドの輝き */
+@keyframes goldShine {
+  0%, 100% { filter: drop-shadow(0 0 6px var(--go))  brightness(1); }
+  50%      { filter: drop-shadow(0 0 18px var(--go)) brightness(1.25); }
+}
+
+/* ■ レトロCRT電源オン演出 */
+@keyframes crtPowerOn {
+  0%   { transform: scaleY(0.005) scaleX(1);    opacity: 0;    }
+  20%  { transform: scaleY(0.005) scaleX(1.05); opacity: 0.6;  }
+  40%  { transform: scaleY(1) scaleX(1);        opacity: 1;    }
+  100% { transform: scaleY(1) scaleX(1);        opacity: 1;    }
+}
+
+/* ■ ピクセル波打ち */
+@keyframes pixelWave {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(-3px); }
+  75%      { transform: translateY(3px); }
+}
+
+/* ■ グリッチ風ぼかし */
+@keyframes glitchBlur {
+  0%, 92%, 100% { filter: none; transform: translateX(0); }
+  93% { filter: blur(0.5px) hue-rotate(20deg);  transform: translateX(-1px); }
+  95% { filter: blur(0px)   hue-rotate(-10deg); transform: translateX(1px);  }
+  97% { filter: blur(0.3px) hue-rotate(0deg);   transform: translateX(0);    }
+}
+
+/* ■ ゲージバーの満たし */
+@keyframes gaugeFill {
+  0%   { width: 0%;   }
+  100% { width: 100%; }
+}
+
+/* ■ 文字打ち込みカーソル */
+@keyframes typingCursor {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ────────────────────────────────────────────────────────
+   ゴールド系強化（重要要素を一段グレードアップ）
+   ──────────────────────────────────────────────────────── */
+.brand-tag,
+.badge-free,
+.cabinet-top {
+  position: relative;
+}
+.brand-tag::after,
+.badge-free::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 230, 0, 0.0) 35%,
+    rgba(255, 230, 0, 0.4) 50%,
+    rgba(255, 230, 0, 0.0) 65%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: goldStreak 3.6s linear infinite;
+}
+@keyframes goldStreak {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ────────────────────────────────────────────────────────
+   ヒーローセクション 追加演出
+   ──────────────────────────────────────────────────────── */
+#hero {
+  /* 背景に深い宇宙感 */
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 10%, rgba(0, 245, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 70% 30%, rgba(255, 45, 120, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 70% at 50% 20%, #1e003e 0%, var(--bg) 65%);
+}
+
+/* ヒーロー筐体の強化（全体に呼吸感） */
+.cabinet-body {
+  animation: neonBreath 4.5s ease-in-out infinite;
+}
+
+/* 流れる装飾光（筐体上部から下部へ） */
+.cabinet::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cy), transparent);
+  animation: pixelWave 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ────────────────────────────────────────────────────────
+   ブランディングセクション 強化
+   ──────────────────────────────────────────────────────── */
+#brand {
+  /* 背景にスタービット追加 */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 230, 0, 0.06) 0px, transparent 1px),
+    radial-gradient(circle at 80% 60%, rgba(0, 245, 255, 0.06) 0px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255, 45, 120, 0.06) 0px, transparent 1px),
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(191, 0, 255, 0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 80%, rgba(255, 45, 120, 0.18) 0%, transparent 60%);
+  background-size: 80px 80px, 100px 100px, 120px 120px, 100% 100%, 100% 100%;
+}
+
+/* モックアップにフロート感 */
+.mockup:nth-child(1) { animation: pixelWave 4s ease-in-out infinite; }
+.mockup:nth-child(2) { animation: pixelWave 4s ease-in-out infinite 0.5s; }
+.mockup:nth-child(3) { animation: pixelWave 4s ease-in-out infinite 1s; }
+
+/* ベネフィットカードに上品なグロウ */
+.bb-item {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.bb-item:hover {
+  transform: translateY(-4px);
+}
+
+/* ────────────────────────────────────────────────────────
+   業種カード - ホバー演出強化
+   ──────────────────────────────────────────────────────── */
+.genre-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+.genre-card:hover {
+  background: rgba(255, 230, 0, 0.04);
+}
+.gc-icon {
+  transition: transform 0.3s;
+  display: inline-block;
+}
+.genre-card:hover .gc-icon {
+  transform: scale(1.2) rotate(-8deg);
+  animation: pixelWave 1s ease-in-out infinite;
+}
+
+/* ────────────────────────────────────────────────────────
+   PAINカード - 番号の存在感UP
+   ──────────────────────────────────────────────────────── */
+.pain-card {
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.pain-card:hover::before {
+  color: rgba(255, 45, 120, 0.18);
+  transform: scale(1.1);
+  transition: color 0.3s, transform 0.3s;
+}
+.pain-icon {
+  transition: transform 0.3s;
+}
+.pain-card:hover .pain-icon {
+  transform: scale(1.15);
+  animation: glitchBlur 0.6s ease-in-out infinite;
+}
+
+/* ────────────────────────────────────────────────────────
+   STEPSセクション - ナンバー強化
+   ──────────────────────────────────────────────────────── */
+.step-num {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.step-icon {
+  transition: transform 0.3s;
+  display: inline-block;
+}
+.step:hover .step-icon {
+  transform: translateY(-4px) rotate(-6deg);
+}
+
+/* ────────────────────────────────────────────────────────
+   FAQ - 開閉時のスムーズなアニメーション強化
+   ──────────────────────────────────────────────────────── */
+.faq-item {
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.faq-item.open {
+  background: rgba(0, 245, 255, 0.07);
+}
+.faq-q {
+  transition: color 0.2s;
+}
+.faq-item:hover .faq-q {
+  color: var(--go);
+}
+
+/* ────────────────────────────────────────────────────────
+   ボイスカード - 引用の強調
+   ──────────────────────────────────────────────────────── */
+.voice-card {
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.voice-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(191, 0, 255, 0.4);
+}
+.voice-stars {
+  transition: filter 0.3s;
+}
+.voice-card:hover .voice-stars {
+  filter: drop-shadow(0 0 6px var(--go));
+}
+
+/* ────────────────────────────────────────────────────────
+   最終CTAセクション - 緊張感UP
+   ──────────────────────────────────────────────────────── */
+#cta-final {
+  /* 背景にゴールドアクセント */
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 30%, rgba(255, 230, 0, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 70% 70%, rgba(255, 45, 120, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 80% at 50% 50%, #200040 0%, var(--bg) 70%);
+}
+.cta-final-head {
+  animation: neonBreath 3s ease-in-out infinite;
+}
+.ct-badge {
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.ct-badge:hover {
+  border-color: var(--go);
+  background: rgba(255, 230, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ────────────────────────────────────────────────────────
+   フッター - ブランド強調
+   ──────────────────────────────────────────────────────── */
+footer {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(255, 45, 120, 0.04) 100%),
+    #030208;
+  position: relative;
+}
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mg), transparent);
+  animation: pixelWave 5s ease-in-out infinite;
+}
+.footer-logo {
+  animation: neonBreath 3.5s ease-in-out infinite;
+}
+.sns-icon {
+  transition: border-color 0.25s, color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.sns-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* ────────────────────────────────────────────────────────
+   全体のスムーズスクロール強化
+   ──────────────────────────────────────────────────────── */
+html {
+  scroll-padding-top: 20px;
+}
+
+/* ────────────────────────────────────────────────────────
+   ピクセルディバイダー強化（流れる光）
+   ──────────────────────────────────────────────────────── */
+.pix-div {
+  position: relative;
+  overflow: hidden;
+}
+.pix-div::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%);
+  animation: pixDivShine 4s linear infinite;
+}
+@keyframes pixDivShine {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ────────────────────────────────────────────────────────
+   セクションの登場演出（強化版）
+   ──────────────────────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.34, 1.36, 0.64, 1),
+              transform 0.7s cubic-bezier(0.34, 1.36, 0.64, 1);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ────────────────────────────────────────────────────────
+   モバイル最適化追加
+   ──────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .brand-headline { line-height: 2.2; }
+  .brand-sub      { font-size: 14px; }
+  .gcm-headline   { font-size: 11px; }
+  .gcm-headline .gcm-big { font-size: 16px; }
+  .voice-text     { font-size: 13px; }
+  .faq-q          { font-size: 8.5px; padding: 16px 18px; }
+}
+
+/* ────────────────────────────────────────────────────────
+   印刷用スタイル（A4印刷対応）
+   ──────────────────────────────────────────────────────── */
+@media print {
+  body { background: #fff; color: #000; }
+  .sticky-cta { display: none; }
+  body::after, body::before { display: none; }
+  section { page-break-inside: avoid; }
+}
+
+/* ────────────────────────────────────────────────────────
+   アクセシビリティ強化
+   ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* リンクのフォーカス時 */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--go);
+  outline-offset: 4px;
+}
+
+/* ────────────────────────────────────────────────────────
+   END OF ENHANCED VISUAL EFFECTS PACK
+   ════════════════════════════════════════════════════════ */
+
 /* ============================================================
    NEON UTILITIES
    ============================================================ */
