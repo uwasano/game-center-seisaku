@@ -953,41 +953,291 @@ section { padding: 72px 20px; position: relative; }
 }
 
 /* ───── ベネフィット3点（看板的） ───── */
+/* ★★★ 3大強み 大見出し ★★★ */
+.three-power-heading {
+  text-align: center;
+  margin: 40px 0 30px;
+  position: relative;
+}
+.tph-sub {
+  font-family: var(--fh);
+  font-size: 10px;
+  color: var(--go);
+  text-shadow: 0 0 8px var(--go), 0 0 16px var(--go);
+  letter-spacing: 0.2em;
+  margin-bottom: 12px;
+  animation: tphSubBlink 2s steps(2) infinite;
+}
+@keyframes tphSubBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.tph-main {
+  font-family: var(--fh);
+  font-size: clamp(48px, 14vw, 72px);
+  line-height: 1;
+  margin-bottom: 8px;
+  display: inline-block;
+  position: relative;
+}
+.tph-num {
+  color: var(--go);
+  text-shadow:
+    0 0 4px #fff,
+    0 0 12px var(--go),
+    0 0 24px var(--go),
+    0 0 36px var(--mg),
+    3px 3px 0 var(--mg),
+    -2px -2px 0 var(--cy);
+  filter: drop-shadow(0 0 8px var(--go));
+  animation: tphNumPulse 1.5s ease-in-out infinite;
+  display: inline-block;
+  -webkit-text-stroke: 2px #000;
+}
+@keyframes tphNumPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.tph-x {
+  font-size: 0.7em;
+  color: #fff;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 12px var(--cy),
+    0 0 24px var(--cy),
+    3px 3px 0 var(--mg),
+    -2px -2px 0 var(--go);
+  margin-left: 4px;
+  display: inline-block;
+  animation: tphXShake 0.8s steps(2) infinite;
+  -webkit-text-stroke: 2px #000;
+}
+@keyframes tphXShake {
+  0% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
+}
+.tph-jp {
+  font-family: var(--fh);
+  font-size: clamp(13px, 4vw, 17px);
+  color: #fff;
+  text-shadow: 0 0 10px var(--mg), 0 0 20px var(--mg);
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.tph-line {
+  width: 80%;
+  max-width: 280px;
+  height: 2px;
+  margin: 0 auto;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--cy) 20%,
+    var(--mg) 50%,
+    var(--go) 80%,
+    transparent);
+  box-shadow: 0 0 8px var(--mg), 0 0 16px var(--cy);
+  animation: tphLineGlow 2s ease-in-out infinite;
+}
+@keyframes tphLineGlow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; box-shadow: 0 0 16px var(--mg), 0 0 32px var(--cy); }
+}
+
 .brand-benefits {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 18px;
   margin-bottom: 36px;
 }
 @media (max-width: 540px) {
-  .brand-benefits { grid-template-columns: 1fr; }
+  .brand-benefits { grid-template-columns: 1fr; gap: 22px; }
 }
 .bb-item {
-  background: rgba(255,255,255,0.04);
-  border: 2px solid;
-  padding: 18px 14px;
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+    rgba(0,0,0,0.4);
+  border: 3px solid;
+  padding: 28px 16px 18px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 10px;
+  overflow: visible;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(60px) scale(0.6) rotate(-8deg);
 }
-.bb-item:nth-child(1) { border-color: var(--cy); box-shadow: 0 0 10px rgba(0,245,255,0.3); }
-.bb-item:nth-child(2) { border-color: var(--mg); box-shadow: 0 0 10px rgba(255,45,120,0.3); }
-.bb-item:nth-child(3) { border-color: var(--gr); box-shadow: 0 0 10px rgba(57,255,20,0.3); }
 
-.bb-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+/* スマッシュ登場 */
+.bb-item.bb-show {
+  animation: bbSmashIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.bb-cyan.bb-show { animation-delay: 0s; }
+.bb-pink.bb-show { animation-delay: 0.25s; }
+.bb-green.bb-show { animation-delay: 0.5s; }
+
+@keyframes bbSmashIn {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.4) rotate(-12deg);
+    filter: blur(8px) brightness(2);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-12px) scale(1.15) rotate(3deg);
+    filter: blur(0) brightness(1.4);
+  }
+  60% {
+    transform: translateY(4px) scale(0.96) rotate(-1deg);
+  }
+  80% {
+    transform: translateY(-2px) scale(1.02) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: blur(0) brightness(1);
+  }
+}
+
+/* インパクト残像（登場直後の白い衝撃波） */
+.bb-item.bb-show::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 12px;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.6), transparent 70%);
+  opacity: 0;
+  animation: bbShockwave 0.9s ease-out forwards;
+}
+.bb-cyan.bb-show::before { animation-delay: 0s; }
+.bb-pink.bb-show::before { animation-delay: 0.25s; }
+.bb-green.bb-show::before { animation-delay: 0.5s; }
+
+@keyframes bbShockwave {
+  0%, 30% { opacity: 0; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+.bb-item::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  pointer-events: none;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  background-size: 250% 250%;
+  background-position: 0% 0%;
+  animation: bbShine 4s linear infinite;
+  opacity: 0.5;
+}
+@keyframes bbShine {
+  0% { background-position: 200% 200%; }
+  100% { background-position: -100% -100%; }
+}
+.bb-item:hover { transform: translateY(-4px); }
+
+.bb-cyan { 
+  border-color: var(--cy); 
+  box-shadow: 0 0 16px rgba(0,245,255,0.5), inset 0 0 24px rgba(0,245,255,0.1);
+  animation: bbCyanGlow 2.4s ease-in-out infinite;
+}
+@keyframes bbCyanGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(0,245,255,0.5), inset 0 0 24px rgba(0,245,255,0.1); }
+  50% { box-shadow: 0 0 28px rgba(0,245,255,0.8), inset 0 0 32px rgba(0,245,255,0.2); }
+}
+.bb-pink { 
+  border-color: var(--mg); 
+  box-shadow: 0 0 16px rgba(255,45,120,0.5), inset 0 0 24px rgba(255,45,120,0.1);
+  animation: bbPinkGlow 2.4s ease-in-out infinite 0.4s;
+}
+@keyframes bbPinkGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(255,45,120,0.5), inset 0 0 24px rgba(255,45,120,0.1); }
+  50% { box-shadow: 0 0 28px rgba(255,45,120,0.8), inset 0 0 32px rgba(255,45,120,0.2); }
+}
+.bb-green { 
+  border-color: var(--gr); 
+  box-shadow: 0 0 16px rgba(57,255,20,0.5), inset 0 0 24px rgba(57,255,20,0.1);
+  animation: bbGreenGlow 2.4s ease-in-out infinite 0.8s;
+}
+@keyframes bbGreenGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(57,255,20,0.5), inset 0 0 24px rgba(57,255,20,0.1); }
+  50% { box-shadow: 0 0 28px rgba(57,255,20,0.8), inset 0 0 32px rgba(57,255,20,0.2); }
+}
+
+/* No.1 / No.2 / No.3 ランクバッジ */
+.bb-rank {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--fh);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  z-index: 3;
+  white-space: nowrap;
+  border: 2px solid;
+}
+.bb-cyan .bb-rank {
+  background: linear-gradient(180deg, #003344, #000);
+  color: var(--cy);
+  border-color: var(--cy);
+  text-shadow: 0 0 8px var(--cy), 0 0 16px var(--cy);
+  box-shadow: 0 0 12px rgba(0,245,255,0.7), inset 0 -2px 4px rgba(0,0,0,0.5);
+}
+.bb-pink .bb-rank {
+  background: linear-gradient(180deg, #440022, #000);
+  color: var(--mg);
+  border-color: var(--mg);
+  text-shadow: 0 0 8px var(--mg), 0 0 16px var(--mg);
+  box-shadow: 0 0 12px rgba(255,45,120,0.7), inset 0 -2px 4px rgba(0,0,0,0.5);
+}
+.bb-green .bb-rank {
+  background: linear-gradient(180deg, #003311, #000);
+  color: var(--gr);
+  border-color: var(--gr);
+  text-shadow: 0 0 8px var(--gr), 0 0 16px var(--gr);
+  box-shadow: 0 0 12px rgba(57,255,20,0.7), inset 0 -2px 4px rgba(0,0,0,0.5);
+}
+
+.bb-icon { 
+  font-size: 36px; 
+  margin-bottom: 10px; 
+  display: block;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: bbIconFloat 2.4s ease-in-out infinite;
+}
+@keyframes bbIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.bb-cyan .bb-icon { color: var(--cy); }
+.bb-pink .bb-icon { color: var(--mg); }
+.bb-green .bb-icon { color: var(--gr); }
+
 .bb-title {
   font-family: var(--fh);
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.7;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
 }
-.bb-item:nth-child(1) .bb-title { color: var(--cy); text-shadow: 0 0 6px var(--cy); }
-.bb-item:nth-child(2) .bb-title { color: var(--mg); text-shadow: 0 0 6px var(--mg); }
-.bb-item:nth-child(3) .bb-title { color: var(--gr); text-shadow: 0 0 6px var(--gr); }
+.bb-cyan .bb-title { color: var(--cy); text-shadow: 0 0 8px var(--cy), 0 0 16px var(--cy); }
+.bb-pink .bb-title { color: var(--mg); text-shadow: 0 0 8px var(--mg), 0 0 16px var(--mg); }
+.bb-green .bb-title { color: var(--gr); text-shadow: 0 0 8px var(--gr), 0 0 16px var(--gr); }
+
 .bb-desc {
   font-family: var(--fb);
   font-size: 12px;
-  color: #ccc;
-  line-height: 1.6;
+  color: #ddd;
+  line-height: 1.7;
+  position: relative;
+  z-index: 2;
 }
 
 /* ───── 引用 ───── */
@@ -2086,19 +2336,32 @@ footer {
       </div>
     </div>
 
+    <!-- ★ 3大強み 見出し ★ -->
+    <div class="three-power-heading fade-up">
+      <div class="tph-sub">★ THE THREE POWERS ★</div>
+      <div class="tph-main">
+        <span class="tph-num">3</span><span class="tph-x">大</span>
+      </div>
+      <div class="tph-jp">ゲーム × 店舗の強み</div>
+      <div class="tph-line"></div>
+    </div>
+
     <!-- ベネフィット3つ -->
     <div class="brand-benefits fade-up">
-      <div class="bb-item">
+      <div class="bb-item bb-cyan">
+        <div class="bb-rank">No.1</div>
         <span class="bb-icon">🏷</span>
         <div class="bb-title">店名が<br>そのままタイトル</div>
         <div class="bb-desc">「○○ブラザーズ」のように、<br>お店の名前がゲーム名になる。<br>覚えてもらえる。</div>
       </div>
-      <div class="bb-item">
+      <div class="bb-item bb-pink">
+        <div class="bb-rank">No.2</div>
         <span class="bb-icon">🎨</span>
         <div class="bb-title">お店オリジナル<br>キャラ登場</div>
         <div class="bb-desc">店主・スタッフ・看板メニューを<br>ドット絵で再現。<br>世界観に没入できる。</div>
       </div>
-      <div class="bb-item">
+      <div class="bb-item bb-green">
+        <div class="bb-rank">No.3</div>
         <span class="bb-icon">📣</span>
         <div class="bb-title">他では遊べない<br>独占コンテンツ</div>
         <div class="bb-desc">「あの店でしか遊べない」<br>希少性が、<br>来店動機を直接的に作る。</div>
@@ -2834,6 +3097,21 @@ document.querySelectorAll('.fade-up').forEach((el,i)=>{
   el.style.transitionDelay = (i % 4) * 0.08 + 's';
   observer.observe(el);
 });
+
+// ---- 3大強み カードを派手に登場 ----
+const bbObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      // 親要素が見えたら、子のカード全部を順番に登場させる
+      const items = e.target.querySelectorAll('.bb-item');
+      items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('bb-show'), i * 200);
+      });
+      bbObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('.brand-benefits').forEach(el=>bbObserver.observe(el));
 
 // ---- STICKY CTA ----
 const sticky = document.getElementById('stickyCta');
